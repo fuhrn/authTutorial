@@ -7,7 +7,8 @@
 // y no deben ser publicas en todos los casos. Solo deben ser publicas si el user no esta logueado
 // y si el user esta logueado, redirigir a /settings. Esto lo controlo en el middleware
 export const publicRoutes = [
-  "/"
+  "/",
+  "/auth/new-verification",
 ];
 
 /**
