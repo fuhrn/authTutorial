@@ -12,6 +12,19 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  // para el caso de error de login con = cuenta de correo pero usado con otro provider
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
+  },
+  events: {
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      })
+    }
+  },
   callbacks: {
     async session({ session, token }) { 
       // console.log({
