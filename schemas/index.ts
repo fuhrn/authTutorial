@@ -1,5 +1,11 @@
 import * as z from 'zod';
 
+export const ResetSchema = z.object({
+  email: z.string().email({
+    message: "Invalid email"
+  })
+}) 
+
 // no ponemos minimo de caracteres porque puede ser que haya una contraseña vieja de pocos caracter
 export const LoginSchema = z.object({
   email: z.string().email({

@@ -3,6 +3,7 @@
 import * as z from "zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas";
@@ -21,6 +22,7 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { login } from "@/actions/login";
+
 
 export const LoginForm = () => { 
   const searcParams = useSearchParams();
@@ -98,6 +100,16 @@ export const LoginForm = () => {
                       type="password"
                     />
                   </FormControl>
+                  <Button
+                    size="sm"
+                    variant="link"
+                    asChild
+                    className="px-0 font-normal"
+                  >
+                    <Link href="/auth/reset">
+                      Forgot Password?
+                    </Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}
