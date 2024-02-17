@@ -14,6 +14,7 @@ export const publicRoutes = [
 /**
  * This file contains all the routes that are used for authentication
  * These routes will redirect logged in users to /settings
+ * auth/new-passwrod es solo para el user que no esta logueado
  * @type {string[]}
  */
 export const authRoutes = [
@@ -21,6 +22,7 @@ export const authRoutes = [
   "/auth/register",
   "/auth/error",
   "/auth/reset",
+  "/auth/new-password",
 ];
 
 /**
