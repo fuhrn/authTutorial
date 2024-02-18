@@ -18,7 +18,7 @@ export const login = async (
 ) => {
   const validatedFields = LoginSchema.safeParse(values);
 
-  console.log(validatedFields);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return { error: "Invalid fields!"};
