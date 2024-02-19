@@ -6,12 +6,14 @@ import { getUserById } from "@/data/user";
 import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
+import { getAccountByUserId } from "./data/account";
 
 export const {
   handlers: { GET, POST },
   auth,
   signIn,
   signOut,
+  // update,
 } = NextAuth({
   // para el caso de error de login con = cuenta de correo pero usado con otro provider
   pages: {
@@ -51,6 +53,10 @@ export const {
       return true
     },
     async session({ session, token }) { 
+      // el parametro token es el token de acceso JWT
+      // console.log({
+      //   session: session,
+      // });
       // console.log({
       //   sessionToken: token,
       // });
@@ -64,6 +70,12 @@ export const {
       if (session.user) { }
       session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
 
+      if (session.user) {
+        session.user.name = token.name;
+        session.user.email = token.email as string;
+        session.user.isOAuth = token.isOAuth as boolean;
+      }
+
       return session;
     },
     // genero el token de acceso para luego tenerlo disponible en el objeto Request
@@ -75,6 +87,15 @@ export const {
       const existingUser = await getUserById(token.sub);
 
       if (!existingUser) return token;
+
+      const existingAccount = await getAccountByUserId(
+        existingUser.id
+      )
+
+      // asignacion manual de los valores del token
+      token.isOAuth = !!existingAccount;
+      token.name = existingUser.name;
+      token.email = existingUser.email;
 
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
