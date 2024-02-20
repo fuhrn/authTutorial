@@ -26,6 +26,9 @@ import { login } from "@/actions/login";
 
 export const LoginForm = () => { 
   const searcParams = useSearchParams();
+  // guardamos la ruta desde la que venimos al login form
+  const callbackUrl = searcParams.get("callbackUrl")
+
   const urlError = searcParams.get("error") === "OAuthAccountNotLinked"
     ? "Email already in use with different provider!"
     : "";
@@ -48,7 +51,7 @@ export const LoginForm = () => {
     setSuccess("");
 
     startTransition(() => {
-      login(values)
+      login(values, callbackUrl)
         .then((data) => {
           if (data?.error) {
             form.reset();
